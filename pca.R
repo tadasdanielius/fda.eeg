@@ -28,7 +28,7 @@ eeg.plot$plot.clusters.charts(fd_smoothed, clstr$cluster)
 
 
 fds = fdata(fd_smoothed)
-pc2 = fdata2pc(fds,ncomp=2,l=10)
+pc2 = fdata2pc(fds,ncomp=2,l=5)
 summary(pc2)
 
 
