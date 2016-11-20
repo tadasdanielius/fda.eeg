@@ -20,9 +20,9 @@ proj.env$fda$cluster = function(data, ncl = proj.env$config$ncl, method = 'Exact
   if (class(eeg) != 'fd') {
     eeg = proj.env$fda$smooth(eeg)
   }
-  clusters = kmeans.fd(eeg, ncl = ncl, method=method, draw=FALSE)
+  #clusters = kmeans.fd(eeg, ncl = ncl, method=method, draw=FALSE)
   
-  #clusters = kmeans.fd(eeg,ncl=ncl,dfunc=func.trim.RPD, method='exact',
-  #         max.iter=30,par.dfunc=list(dfunc="depth.FM",deriv=c(0,1,2)))
+  clusters = kmeans.fd(eeg,ncl=ncl,dfunc=func.trim.RPD, method=method,
+           max.iter=70,par.dfunc=list(dfunc="depth.FM",deriv=c(0,1,2)))
   return (clusters)
 }
