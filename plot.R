@@ -77,7 +77,12 @@ proj.env$fda.plot$plot.clusters <- function(clstr, numbers = FALSE) {
 proj.env$fda.plot$plot.clusters.charts <- function(data, clusters) {
   ncl <- length(unique(clusters))
   
-  par(mfrow = c(round(ncl / 2), 2))
+  if (ncl > 2) {
+    par(mfrow = c(round(ncl / 2), 2))  
+  } else {
+    par(mfrow = c(2,1))
+  }
+  
   for (x in 1:ncl) {
     plot(data[which(clusters %in% x)])
   }

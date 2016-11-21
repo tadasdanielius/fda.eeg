@@ -26,3 +26,10 @@ proj.env$fda$cluster = function(data, ncl = proj.env$config$ncl, method = 'Exact
            max.iter=70,par.dfunc=list(dfunc="depth.FM",deriv=c(0,1,2)))
   return (clusters)
 }
+
+proj.env$fda$cluster_cor = function(cl_1, clstr, data, time_vector) {
+  cluster_1 = data[which(clstr$cluster %in% cl_1)]
+  corfda=cor.fd(time_vector,cluster_1) #, time_vector, cluster_2)
+  
+  return (corfda)
+}

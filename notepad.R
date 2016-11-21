@@ -81,6 +81,7 @@ ldata = list("df" = resp,
              "x" = fdata(all.smooth),
              "x.d1" = all.d1)
 
+par(mfrow = c(1,1))
 res.DD<-classif.DD(y,all.d1,classif=settings.classif,depth=settings.depth)
 res.DD$prob.classification
 
