@@ -1,4 +1,5 @@
-source('main.R')
+source('include.R')
+set.seed(1)
 
 event.matrix = proj.env$eeg_data$EEG$event.matrix
 eeg.sample = proj.env$eeg_data$sample
@@ -12,7 +13,7 @@ nbasis = 15
 nbasis.type = 'fourier'
 
 settings.classif = 'lda'
-settings.depth = 'RPD'
+settings.depth = 'RP'
 settings.nderiv = 1
 
 
@@ -41,24 +42,29 @@ generate.sample.mean.matrix = function(event.type) {
   return(ret)
 }
 
-class_1 = generate.sample.mean.matrix(config$codes$tongue)
-class_2 = generate.sample.mean.matrix(config$codes$foot_towards_right)
+#class_1 = generate.sample.mean.matrix(config$codes$tongue)
+#class_2 = generate.sample.mean.matrix(config$codes$foot_towards_right)
+
+class_1 = generate.sample.mean.matrix(config$codes$left_hand)
+class_2 = generate.sample.mean.matrix(config$codes$right_hand)
+
+
 class_3 = generate.sample.mean.matrix(config$codes$left_hand)
 
 
-min_val = min(length(class_1$events[,2]), length(class_2$events[,2]),length(class_3$events[,2]))
+min_val = min(length(class_1$events[,2]), length(class_2$events[,2])) #,length(class_3$events[,2]))
 test_from = 25
 
 test_1 = class_1$mvt[,test_from:min_val]
 test_2 = class_2$mvt[,test_from:min_val]
-test_3 = class_3$mvt[,test_from:min_val]
+#test_3 = class_3$mvt[,test_from:min_val]
   
 min_val = min_val - test_from
 class_1$mvt = class_1$mvt[,1:min_val]
 class_2$mvt = class_2$mvt[,1:min_val]
-class_3$mvt = class_3$mvt[,1:min_val]
+#class_3$mvt = class_3$mvt[,1:min_val]
 
-all = cbind(class_1$mvt, class_2$mvt, class_3$mvt)
+all = cbind(class_1$mvt, class_2$mvt) #, class_3$mvt)
 all = t(all)
 rownames(all) <- NULL
 all.smooth = fda.smooth(all, nbasis = nbasis, type.basis = nbasis.type)
@@ -66,7 +72,7 @@ all.d1 = fdata.deriv(all.smooth, nderiv = settings.nderiv)
 
 
 
-y = c(rep(1, min_val), rep(2, min_val), rep(3,min_val))
+y = c(rep(1, min_val), rep(2, min_val)) #, rep(3,min_val))
 
 resp = as.data.frame(y)
 colnames(resp) = c('RESPONSE')
@@ -78,7 +84,7 @@ ldata = list("df" = resp,
 res.DD<-classif.DD(y,all.d1,classif=settings.classif,depth=settings.depth)
 res.DD$prob.classification
 
-real = c(rep(1, min_val+1), rep(2, min_val+1), rep(3,min_val+1))
+real = c(rep(1, min_val+1), rep(2, min_val+1)) #, rep(3,min_val+1))
 all.test = cbind(test_1, test_2, test_3)
 all.test = all.test[,14]
 all.test = t(all.test)
@@ -91,17 +97,17 @@ pred = predict.classif.DD(res.DD, all.test.d1)
 pred
 
 vect = c()
-for (x in 1:(min_val*3)) {
+for (x in 1:(min_val*2+2)) {
   all.test = cbind(test_1, test_2, test_3)
   all.test = all.test[,x]
   all.test = t(all.test)
   all.test.smooth = fda.smooth(all.test, nbasis = nbasis, type.basis = nbasis.type)
   all.test.d1 = fdata.deriv(all.test.smooth, nderiv = settings.nderiv)
   pred = predict.classif.DD(res.DD, all.test.d1)
-  vect = c(vect, pred)
+  vect = c(vect, as.vector(pred))
   message(x, ' ', pred)
   
 }
 
-#table(as.vector(pred),real)
+table(as.vector(vect),real)
 

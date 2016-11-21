@@ -18,6 +18,7 @@ fd_smpl = fdata(smpl)
 pc = fdata2pc(fd_smpl,l=10, ncomp=4)
 summary(pc)
 
+par(mfrow = c(1,1))
 fd_smoothed = fda.smooth(smpl)
 plot(fd_smoothed)
 
@@ -32,10 +33,11 @@ pc2 = fdata2pc(fds,ncomp=2,l=5)
 summary(pc2)
 
 
-clstr = fda.cluster(fd_smoothed, ncl=4)
+set.seed(3)
+clstr = fda.cluster(fd_smoothed, ncl=3)
 eeg.plot$plot.clusters.charts(fd_smoothed, clstr$cluster)
 eeg.plot$plot.clusters(clstr)
 
-clstr = fda.cluster(fd_smoothed, ncl=2)
-eeg.plot$plot.clusters.charts(fd_smoothed, clstr$cluster)
-eeg.plot$plot.clusters(clstr)
+fds = fdata(fd_smoothed)
+pc2 = fdata2pc(fds,ncomp=3,l=5)
+summary(pc2)

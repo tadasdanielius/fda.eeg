@@ -1,4 +1,4 @@
-source('main.R')
+source('include.R')
 
 event.matrix = proj.env$eeg_data$EEG$event.matrix
 eeg.sample = proj.env$eeg_data$sample
