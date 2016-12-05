@@ -72,6 +72,22 @@ summary(eeg.deriv.pca3)
 
 # check white noise PCA_X1(t) - SMOOTH_X2(t)
 
+#residuals
+tt = eeg.event.data.fdata$argvals
+eeg.eval = eval.fd(tt,eeg.event.data.smooth)
+
+eeg.event.data.pca3 = fdata2pc(eeg.event.data.smooth.fd,ncomp=10, lambda=10)
+eeg.pca3.eval = eval.fd(tt,fdata2fd(eeg.event.data.pca3$fdataobj))
+
+plot(eeg.eval[,1], type='l')
+lines(eeg.pca3.eval[,1], col='green')
+lines(eeg.eval[,1] - eeg.pca3.eval[,1], col='red')
+
+pc = pca.fd(eeg.event.data.smooth, nharm = 5, centerfns = FALSE)
+pc.eval = eval.fd(tt, pc$harmonics)
+plot(eeg.eval[,1], type='l')
+lines(pc.eval[,2]*100,type='l', col='red')
+
 # Correlations
 time_vector=1:250
 eeg.data.corr1 = proj.env$fda$cluster_cor(1, eeg.clusters, eeg.event.data.smooth,time_vector)

@@ -7,7 +7,7 @@ proj.env$set.config = function(envir = proj.env) {
   config = new.env(parent=emptyenv())
   
   config$type.basis = 'bspline'
-  config$nbasis = 18
+  config$nbasis = 27
   config$hz = 250
   config$trial_duration = 7 # In seconds
   config$ncl = 4

@@ -10,6 +10,6 @@ eeg.event = events.left_hand[1,]
 
 eeg.event.data = eeg.sample(eeg.event$SECOND,1)
 
-eeg.event.data.fd = fdata(eeg.event.data)
-eeg.event.data.smooth = fda.smooth(eeg.event.data.fd)
+eeg.event.data.fdata = fdata(eeg.event.data)
+eeg.event.data.smooth = fda.smooth(eeg.event.data.fdata)
 
