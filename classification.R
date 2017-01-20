@@ -9,7 +9,7 @@ config = proj.env$config
 x_minus = 0
 x_plus = 2
 
-nbasis = 15
+nbasis = 35
 nbasis.type = 'fourier'
 
 settings.classif = 'lda'
@@ -18,7 +18,7 @@ settings.nderiv = 1
 
 
 get.sample.mean = function(from, duration = 1) {
-  sample.data = eeg.sample(from, duration)
+  sample.data = eeg.sample(from, duration, channels=7:45)
   sample.mean = func.mean(sample.data)
   return(as.vector(sample.mean$data[, ]))
 }
@@ -53,11 +53,11 @@ class_3 = generate.sample.mean.matrix(config$codes$left_hand)
 
 
 min_val = min(length(class_1$events[,2]), length(class_2$events[,2])) #,length(class_3$events[,2]))
-test_from = 25
+test_from = 23
 
 test_1 = class_1$mvt[,test_from:min_val]
 test_2 = class_2$mvt[,test_from:min_val]
-#test_3 = class_3$mvt[,test_from:min_val]
+test_3 = class_3$mvt[,test_from:min_val]
   
 min_val = min_val - test_from
 class_1$mvt = class_1$mvt[,1:min_val]

@@ -87,3 +87,23 @@ proj.env$fda.plot$plot.clusters.charts <- function(data, clusters) {
     plot(data[which(clusters %in% x)])
   }
 }
+
+plot_scatter = function(d, x, y) {
+  scores = d$scores
+  xval = scores[,x]
+  yval = scores[,y]
+  plot(xval,yval,col='gray', xlab=paste('Harmonics ',x), ylab=paste('Harmonics ', y))
+  text(xval,yval, labels=seq(1,60))
+}
+
+get_event_data = function(evt, idx, duration=1, append=0, smooth=T) {
+  evt.list = event.matrix[event.matrix$TYPE == evt & event.matrix$VALID == TRUE,]
+  eeg.evt = evt.list[idx,]
+  evt.data = eeg.sample(eeg.evt$SECOND+append, duration)
+  if (smooth == F) {
+    return(fdata(evt.data))
+  }
+  evt.fdata = fdata(evt.data)
+  eeg.smooth = fda.smooth(evt.fdata)
+  return(eeg.smooth)
+}
