@@ -12,7 +12,7 @@ The data is taken from  "[BCI Competition III](http://www.bbci.de/competition/ii
 The recording was made with a 60 channel EEG amplifier from Neuroscan, using the left mastoid for reference and right mastoid as ground. The EEG was sampled with 250 Hz, it was
 filtered between 1 and 50hz with Notchfilter on. 60 EEG channels were recorded according to this scheme.
 
-![scheme](https://github.com/tadasdanielius/fda.eeg/blob/master/images/fig1.jpeg)
+![scheme](https://github.com/tadasdanielius/fda.eeg/blob/master/figures/Fig1.jpg)
 
 ### Steps
 
