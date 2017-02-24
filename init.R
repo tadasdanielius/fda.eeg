@@ -8,7 +8,7 @@ proj.env$load_library = function(lib) {
     return (FALSE)
   }
   message('Loading ', lib)
-  if (!"fda.usc" %in% installed.packages()) {
+  if (!lib %in% installed.packages()) {
     message('Package ', lib, ' is not installed fda.usc. Installing')
     install.packages(lib)
   } else {
